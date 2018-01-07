@@ -35,5 +35,6 @@ public class redisCluster {
         jedisCluster.set("name","jas");
         String name = jedisCluster.get("name");
         System.out.println(name);
+        
     }
 }
