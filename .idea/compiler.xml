@@ -6,14 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mavenTest" />
+        <module name="maven-test" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7">
-      <module name="mavenTest" target="1.5" />
+    <bytecodeTargetLevel>
+      <module name="maven-test" target="1.5" />
     </bytecodeTargetLevel>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding UTF8" />
   </component>
 </project>
