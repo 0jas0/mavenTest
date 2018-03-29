@@ -10,6 +10,11 @@ import io.netty.util.ReferenceCountUtil;
  * Created by Administrator on 2017/12/19.
  */
 public class ClientHandler extends ChannelHandlerAdapter{
+    /**
+     * 向服务器发送消息
+     * @param ctx
+     * @throws Exception
+     */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息1@$".getBytes()));
