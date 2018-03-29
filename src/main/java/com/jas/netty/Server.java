@@ -34,6 +34,7 @@ public class Server {
                  socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
                  //可以使接受到的数据变成字符串
                  socketChannel.pipeline().addLast(new StringDecoder());
+                 //具体的业务处理
                  socketChannel.pipeline().addLast(new ServerHandler());
              }
          })

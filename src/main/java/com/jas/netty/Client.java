@@ -31,7 +31,9 @@ public class Client {
                  //ByteBuf buf = Unpooled.copiedBuffer("@$".getBytes());
                  //socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,buf));
                  socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+                 // 可以使接受到的数据变成字符串
                  socketChannel.pipeline().addLast(new StringDecoder());
+                 // 处理具体的业务逻辑
                  socketChannel.pipeline().addLast(new ClientHandler());
              }
          })
