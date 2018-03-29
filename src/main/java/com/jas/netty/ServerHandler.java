@@ -19,7 +19,7 @@ public class ServerHandler extends ChannelHandlerAdapter{
             ByteBuf byteBuf = (ByteBuf) msg;
             byte[] data = new byte[byteBuf.readableBytes()];
             byteBuf.readBytes(data);
-            System.out.println("服务器端接受到信息："+new String(data));
+            System.out.println("服务器端接受到信息："+new String(data,"UTF-8"));
             ChannelFuture channelFuture = ctx.writeAndFlush(Unpooled.copiedBuffer("服务器个你反馈的信息@$".getBytes()));
             //关闭连接的客户端，服务器不关闭
             channelFuture.addListener(ChannelFutureListener.CLOSE);

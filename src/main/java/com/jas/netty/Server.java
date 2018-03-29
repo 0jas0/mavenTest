@@ -18,6 +18,8 @@ import io.netty.handler.codec.string.StringDecoder;
  */
 public class Server {
     public static void main(String[] args) {
+        // NioEventLoopGroup是个线程组，它包含了一组NIO线程，专门用于网络事件的处理，实际上它们就是Reactor线程组。
+        // 这里创建两个线程的原因是一个用于服务端接受客户端的连接，另一个是用于SocketChannel的网络读写
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         ServerBootstrap b = new ServerBootstrap();
@@ -29,7 +31,7 @@ public class Server {
                  ByteBuf buf = Unpooled.copiedBuffer("@$".getBytes());
                  socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,buf));
                  //可以使接受到的数据变成字符串
-                 //socketChannel.pipeline().addLast(new StringDecoder());
+                 socketChannel.pipeline().addLast(new StringDecoder());
                  socketChannel.pipeline().addLast(new ServerHandler());
              }
          })

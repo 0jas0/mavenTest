@@ -29,7 +29,7 @@ public class Client {
                  //拆包
                  ByteBuf buf = Unpooled.copiedBuffer("@$".getBytes());
                  socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,buf));
-                 //socketChannel.pipeline().addLast(new StringDecoder());
+                 socketChannel.pipeline().addLast(new StringDecoder());
                  socketChannel.pipeline().addLast(new ClientHandler());
              }
          })
@@ -39,9 +39,9 @@ public class Client {
             // Start the client.
             ChannelFuture f = b.connect("127.0.0.1", 12345).sync();
             //向服务器发送一条信息
-            f.channel().writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息1@$".getBytes()));
-            f.channel().writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息2@$".getBytes()));
-            f.channel().writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息3@$".getBytes()));
+            //f.channel().writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息1@$".getBytes()));
+            //f.channel().writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息2@$".getBytes()));
+            //f.channel().writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息3@$".getBytes()));
             // Wait until the connection is closed.
             f.channel().closeFuture().sync();
         } catch (InterruptedException e) {
