@@ -26,8 +26,8 @@ public class ServerHandler extends ChannelHandlerAdapter{
             if (msg instanceof String){
                 String message = (String)msg;
                 System.out.println("服务器接受了一个消息："+message);
-                channelFuture = ctx.writeAndFlush(Unpooled.copiedBuffer("服务器个你反馈的信息".getBytes()));
             }
+            channelFuture = ctx.writeAndFlush(Unpooled.copiedBuffer(("服务器个你反馈的信息"+System.getProperty("line.separator")).getBytes()));
             //关闭连接的客户端，服务器不关闭
             channelFuture.addListener(ChannelFutureListener.CLOSE);
         }finally {
