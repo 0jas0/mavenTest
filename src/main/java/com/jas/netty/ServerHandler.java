@@ -16,11 +16,18 @@ public class ServerHandler extends ChannelHandlerAdapter{
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         try {
             //处理业务逻辑
-            ByteBuf byteBuf = (ByteBuf) msg;
-            byte[] data = new byte[byteBuf.readableBytes()];
-            byteBuf.readBytes(data);
-            System.out.println("服务器端接受到信息："+new String(data,"UTF-8"));
-            ChannelFuture channelFuture = ctx.writeAndFlush(Unpooled.copiedBuffer("服务器个你反馈的信息@$".getBytes()));
+            if (msg instanceof ByteBuf) {
+                ByteBuf byteBuf = (ByteBuf) msg;
+                byte[] data = new byte[byteBuf.readableBytes()];
+                byteBuf.readBytes(data);
+                System.out.println("服务器端接受到信息：" + new String(data, "UTF-8"));
+            }
+            ChannelFuture channelFuture = null;
+            if (msg instanceof String){
+                String message = (String)msg;
+                System.out.println("服务器接受了一个消息："+message);
+                channelFuture = ctx.writeAndFlush(Unpooled.copiedBuffer("服务器个你反馈的信息".getBytes()));
+            }
             //关闭连接的客户端，服务器不关闭
             channelFuture.addListener(ChannelFutureListener.CLOSE);
         }finally {

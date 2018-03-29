@@ -13,6 +13,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
@@ -27,8 +28,9 @@ public class Client {
          .handler(new ChannelInitializer<SocketChannel>() {
              protected void initChannel(SocketChannel socketChannel) throws Exception {
                  //拆包
-                 ByteBuf buf = Unpooled.copiedBuffer("@$".getBytes());
-                 socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,buf));
+                 //ByteBuf buf = Unpooled.copiedBuffer("@$".getBytes());
+                 //socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,buf));
+                 socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
                  socketChannel.pipeline().addLast(new StringDecoder());
                  socketChannel.pipeline().addLast(new ClientHandler());
              }

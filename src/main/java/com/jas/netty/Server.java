@@ -11,6 +11,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
@@ -28,8 +29,9 @@ public class Server {
          .childHandler(new ChannelInitializer<SocketChannel>() {
              protected void initChannel(SocketChannel socketChannel) throws Exception {
                  //拆包
-                 ByteBuf buf = Unpooled.copiedBuffer("@$".getBytes());
-                 socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,buf));
+                 //ByteBuf buf = Unpooled.copiedBuffer("@$".getBytes());
+                 //socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,buf));
+                 socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
                  //可以使接受到的数据变成字符串
                  socketChannel.pipeline().addLast(new StringDecoder());
                  socketChannel.pipeline().addLast(new ServerHandler());

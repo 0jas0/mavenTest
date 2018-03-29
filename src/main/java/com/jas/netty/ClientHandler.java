@@ -17,20 +17,25 @@ public class ClientHandler extends ChannelHandlerAdapter{
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息1@$".getBytes()));
-        ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息2@$".getBytes()));
-        ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息3@$".getBytes()));
+        String requestStr = "客户端发送了一个请求";
+        for (int i = 0; i < 100; i++){
+            ctx.writeAndFlush(Unpooled.copiedBuffer((requestStr+System.getProperty("line.separator")).getBytes()));
+        }
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         try {
             //处理业务逻辑
-            if(msg instanceof ByteBuf){
+            /*if(msg instanceof ByteBuf){
                 ByteBuf byteBuf = (ByteBuf)msg;
                 byte[] data = new byte[byteBuf.readableBytes()];
                 byteBuf.readBytes(data);
                 System.out.println("客户端接受到信息:" + new String(data,"UTF-8"));
+            }*/
+            if (msg instanceof String){
+                String message = (String) msg;
+                System.out.println("客户端接受的消息："+message);
             }
 
         }finally {
