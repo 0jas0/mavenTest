@@ -20,7 +20,6 @@ public class ClientHandler extends ChannelHandlerAdapter{
         ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息1@$".getBytes()));
         ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息2@$".getBytes()));
         ctx.writeAndFlush(Unpooled.copiedBuffer("客户端发送来的消息3@$".getBytes()));
-
     }
 
     @Override
