@@ -16,12 +16,12 @@ public class ServerHandler extends ChannelHandlerAdapter{
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         try {
             //处理业务逻辑
-            if (msg instanceof ByteBuf) {
+            /*if (msg instanceof ByteBuf) {
                 ByteBuf byteBuf = (ByteBuf) msg;
                 byte[] data = new byte[byteBuf.readableBytes()];
                 byteBuf.readBytes(data);
                 System.out.println("服务器端接受到信息：" + new String(data, "UTF-8"));
-            }
+            }*/
             ChannelFuture channelFuture = null;
             if (msg instanceof String){
                 String message = (String)msg;
