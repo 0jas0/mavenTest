@@ -29,7 +29,7 @@ public class ServerHandler extends ChannelHandlerAdapter{
             }
             channelFuture = ctx.writeAndFlush(Unpooled.copiedBuffer(("服务器个你反馈的信息"+System.getProperty("line.separator")).getBytes()));
             //关闭连接的客户端，服务器不关闭
-            channelFuture.addListener(ChannelFutureListener.CLOSE);
+            //channelFuture.addListener(ChannelFutureListener.CLOSE);
         }finally {
             ReferenceCountUtil.release(msg);
         }
