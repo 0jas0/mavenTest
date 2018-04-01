@@ -21,8 +21,7 @@ public class ServertHandler extends ChannelHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg)
             throws Exception {
         Send send = (Send) msg;
-        System.out.println("client发送："+send);
-
+        System.out.println("服务器接受客户端发送的消息："+send);
         Receive receive = new Receive();
         receive.setId(send.getId());
         receive.setMessage(send.getMessage());
