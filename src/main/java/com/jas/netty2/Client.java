@@ -15,19 +15,22 @@ public class Client {
 
     public static void main(String[] args) throws InterruptedException {
         EventLoopGroup worker = new NioEventLoopGroup();
-        Bootstrap b = new Bootstrap();
-        b.group(worker)
-                .channel(NioSocketChannel.class)
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel sc) throws Exception {
-                        sc.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingDecoder());
-                        sc.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingEncoder());
-                        sc.pipeline().addLast(new ClientHandler());
-                    }
-                });
-        ChannelFuture f=b.connect("127.0.0.1",8765).sync();
-        f.channel().closeFuture().sync();
-        worker.shutdownGracefully();
+        try {
+            Bootstrap b = new Bootstrap();
+            b.group(worker)
+                    .channel(NioSocketChannel.class)
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel sc) throws Exception {
+                            sc.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingDecoder());
+                            sc.pipeline().addLast(MarshallingCodeCFactory.buildMarshallingEncoder());
+                            sc.pipeline().addLast(new ClientHandler());
+                        }
+                    });
+            ChannelFuture f = b.connect("127.0.0.1", 8765).sync();
+            f.channel().closeFuture().sync();
+        }finally {
+            worker.shutdownGracefully();
+        }
     }
 }
