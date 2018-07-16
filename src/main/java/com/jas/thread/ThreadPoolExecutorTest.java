@@ -50,6 +50,7 @@ public class ThreadPoolExecutorTest {
     }
 
     public static void main(String[] args) {
+        //会先创建corepoolSize的线程大小，然后放到队列中，最后才创建到达maximumPoolSize的线程，最后执行拒绝的策略
         ThreadPoolExecutor threadPoolExcutor = new ThreadPoolExecutor(1, 2, 0L, TimeUnit.SECONDS, new ArrayBlockingQueue(2), new RejectedExecutionHandler() {
             public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
                 System.out.println("拒绝了这个任务"+r.toString());

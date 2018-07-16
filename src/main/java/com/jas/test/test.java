@@ -80,7 +80,7 @@ public class test {
         return list;
     }
 
-    public static void printArr(int[] arr, int i){
+    public  void printArr(int[] arr, int i){
         if (i == arr.length-1){
             System.out.println(arr[i]);
             return;
@@ -90,7 +90,7 @@ public class test {
     }
 
     @Test
-    public static void test2() throws BrokenBarrierException, InterruptedException {
+    public  void test2() throws BrokenBarrierException, InterruptedException {
         CyclicBarrier cyclicBarrier = new CyclicBarrier(2, new Runnable() {
             public void run() {
                 System.out.println("aaa");
@@ -98,5 +98,11 @@ public class test {
         });
         cyclicBarrier.await();
         cyclicBarrier.await();
+    }
+
+    @Test
+    public void test3(){
+        int cpus = Runtime.getRuntime().availableProcessors();
+        System.out.println(cpus);
     }
 }
