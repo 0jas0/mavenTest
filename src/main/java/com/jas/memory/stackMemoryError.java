@@ -1,5 +1,8 @@
 package com.jas.memory;
 
+/**
+ * -Xss160k
+ */
 public class stackMemoryError {
     private int stackLength = 1;
     public void stackLeak(){
