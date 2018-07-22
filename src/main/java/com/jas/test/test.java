@@ -105,4 +105,19 @@ public class test {
         int cpus = Runtime.getRuntime().availableProcessors();
         System.out.println(cpus);
     }
+
+    @Test
+    public void test04(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
 }
