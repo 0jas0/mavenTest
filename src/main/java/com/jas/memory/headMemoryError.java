@@ -12,7 +12,8 @@ public class headMemoryError {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        List<OOMObject> list = new LinkedList<>();
+        List<OOMObject> list = new
+                LinkedList<>();
         while (true){
             list.add(new OOMObject());
         }
