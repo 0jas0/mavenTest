@@ -1,12 +1,33 @@
 package com.jas.guava;
 
+import com.google.common.base.Function;
 import com.google.common.base.Splitter;
 import com.google.common.collect.*;
+import com.jas.bean.person;
+import com.sun.istack.internal.Nullable;
+import org.junit.Test;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 public class collection {
+
+    @Test
+    public void listToMap(){
+        List<person> list = new ArrayList<>();
+        list.add(new person(20,"红",1,160));
+        list.add(new person(23,"黑",0,161));
+        list.add(new person(21,"绿",1,162));
+        list.add(new person(22,"蓝",0,163));
+        Map<Integer, person> insuranceFixedPercentModelMap = Maps.uniqueIndex(list, new Function<person, Integer>() {
+            @Nullable
+            @Override
+            public Integer apply(@Nullable person person1) {
+                return person1.getAge();
+            }
+        });
+        System.out.println(insuranceFixedPercentModelMap);
+    }
+
     public static void main(String[] args) {
         // 不可变集合 不可对集合中的元素进行add和remove
         Set<String> immutablesSet1 = ImmutableSet.of("a", "b", "c", "d");
