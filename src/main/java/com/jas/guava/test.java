@@ -1,11 +1,32 @@
 package com.jas.guava;
 
 import com.google.common.base.*;
+import com.google.common.collect.FluentIterable;
+import com.jas.bean.person;
+import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class test {
+
+    @Test
+    public void test1(){
+        List<person> personList = new ArrayList<>();
+        personList.add(new person(1,"red",2,123));
+        personList.add(new person(2,"black",2,123));
+        personList.add(new person(3,"black",2,123));
+        personList.add(new person(1,"black",2,123));
+        personList = FluentIterable.from(personList).filter(new Predicate<person>(){
+            @Override
+            public boolean apply(person person) {
+                return person.getAge() == 1;
+            }
+        }).toList();
+        System.out.println(personList);
+    }
     public static void main(String[] args) {
         // 判断一个字符串是空还是null
         boolean empty = Strings.isNullOrEmpty("");
