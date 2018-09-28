@@ -20,7 +20,6 @@ public class test1 {
         try {
             IStudentDAO studentDAO = sqlSessionManager.getMapper(IStudentDAO.class);
             List<StudentPO> productList = studentDAO.selectByCourseId(10);
-            List<StudentPO> productList1 = studentDAO.selectByCourseId(10);
             System.out.println(JSONObject.toJSONString(productList));
         } finally {
             sqlSessionManager.close();
