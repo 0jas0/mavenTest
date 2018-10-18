@@ -24,11 +24,12 @@ public class curatorConnection {
                             // connectString，zookeeper服务器地址及端口号，多个zookeeper服务器地址以“,”分隔。
                             .builder().connectString(zookeeper1.connectionString)
                             // sessionTimeoutMs，会话超时时间，单位毫秒，默认为60000ms。
-                            .sessionTimeoutMs(1000).connectionTimeoutMs(1000)
+                            .sessionTimeoutMs(5000).connectionTimeoutMs(6000)
                             .retryPolicy(retry).build();
                 }
             }
         }
+        curatorFramework.start();
         return curatorFramework;
     }
 

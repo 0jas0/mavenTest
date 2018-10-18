@@ -11,7 +11,6 @@ import java.util.List;
 public class curatorBaseOperation {
     public static void main(String[] args) throws Exception {
         CuratorFramework curatorFramework = curatorConnection.getInstance();
-        curatorFramework.start();
 
         /**
          *  创建节点，creatingParentsIfNeeded（）是如果父节点不存在，则在创建节点的同时创建父节点；
