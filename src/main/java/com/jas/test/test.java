@@ -88,13 +88,40 @@ public class test {
 
     }
 
+    /**
+     * 求字符串 最长回文子串
+     * @param s
+     * @return
+     */
     public String longestPalindrome(String s) {
-        return "";
+        if (s == null || "".equals(s)) {
+            return "";
+        }
+        int length = s.length();
+        String maxLength = "";
+        int[][] dp = new int[length][length];
+        for (int i = 0; i < length; i++){
+            dp[i][i] = 1;
+            if (i < length -1 && s.charAt(i) == s.charAt(i+1)){
+                dp[i][i+1] = 1;
+                maxLength = s.substring(i,i+2);
+            }
+        }
+        for (int L = 3; L <= length; L++){
+            for (int i = 0; i+L-1 < length; i++){
+                int j = i+L-1;
+                if (s.charAt(i) == s.charAt(j) && dp[i+1][j-1] == 1){
+                    dp[i][j] = 1;
+                    maxLength = s.substring(i,j+1);
+                }
+            }
+        }
+        return maxLength.equals("")? s.charAt(0) + "" : maxLength;
     }
 
     public static void main(String[] args) {
         test t = new test();
-        String str = t.longestPalindrome("aabbccdd");
+        String str = t.longestPalindrome("");
         System.out.println(str);
     }
     @Test
