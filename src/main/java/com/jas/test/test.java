@@ -11,6 +11,92 @@ import java.util.concurrent.CyclicBarrier;
  * Created by Administrator on 2017/10/17.
  */
 public class test {
+
+    /**
+     * 给定一个字符串，找出不含有重复字符的最长子串的长度。
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || "".equals(s)){
+            return 0;
+        }
+        char[] chars = s.toCharArray();
+        int maxLength = 0;
+        int stackSize = 0;
+        LinkedList<Character> characters = new LinkedList<>();
+        for (int i = 0 ;i < chars.length; i++){
+            if (characters.contains(chars[i])){
+                stackSize = characters.size();
+                maxLength = Math.max(stackSize, maxLength);
+                Character character = characters.removeFirst();
+                while (character != null){
+                    if (Character.compare(character, chars[i]) == 0){
+                        break;
+                    }
+                    character = characters.removeFirst();
+                }
+            }
+            characters.addLast(chars[i]);
+        }
+        maxLength = Math.max(characters.size(), maxLength);
+        return maxLength;
+    }
+
+    /**
+     * 寻找两个数组的中位数
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int length = nums1.length + nums2.length;
+        int[] newArr = new int[length];
+        int k = 0;
+        for (int i = 0,j = 0; i < nums1.length || j < nums2.length;){
+            if (i == nums1.length){
+                newArr[k++] = nums2[j];
+                j++;
+                continue;
+            }
+            if (j == nums2.length){
+                newArr[k++] = nums1[i];
+                i++;
+                continue;
+            }
+            if (nums1[i] < nums2[j]){
+                newArr[k++] = nums1[i];
+                i++;
+            }else if (nums1[i] > nums2[j]){
+                newArr[k++] = nums2[j];
+                j++;
+            }else {
+                newArr[k++] = nums2[j];
+                newArr[k++] = nums1[i];
+                i++;
+                j++;
+            }
+        }
+        if (length % 2 == 0){
+            int index1 = length/2;
+            int index2 = index1-1;
+            return (newArr[index1] + newArr[index2])/2.0;
+        }else {
+            int index = length/2;
+            return newArr[index];
+        }
+
+    }
+
+    public String longestPalindrome(String s) {
+        return "";
+    }
+
+    public static void main(String[] args) {
+        test t = new test();
+        String str = t.longestPalindrome("aabbccdd");
+        System.out.println(str);
+    }
     @Test
     public void aa(){
         List<person> lists = new ArrayList<person>();
