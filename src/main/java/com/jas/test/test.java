@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017/10/17.
@@ -154,10 +156,93 @@ public class test {
         return result.toString();
     }
 
+    /**
+     * 给定一个 32 位有符号整数，将整数中的数字进行反转。
+     * @param x 给定的整数
+     * @return 把整形的数字进行反转
+     */
+    public int reverse(int x) {
+        Stack<Integer> stack = new Stack<>();
+        boolean negative = false;
+        if (x  < 0){
+            negative = true;
+            x = -x;
+        }
+        while (x > 0){
+            stack.push(x%10);
+            x = x/10;
+        }
+        int res = 0;
+        int digit = 0;
+        while (!stack.isEmpty()){
+            Integer pop = stack.pop();
+            res += pop*Math.pow(10,digit++);
+        }
+        return negative ? -res : res;
+    }
+
+    /**
+     * 将字符串转为整数。
+     * @param str
+     * @return
+     */
+    public int myAtoi(String str) {
+        if (str == null || "".equals(str)){
+            return 0;
+        }
+        str = str.trim();
+        if (str.startsWith("+") && !str.startsWith("+-")){
+            str = str.substring(1,str.length());
+        }
+        String regex = "^-?\\d+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(str);
+        if (matcher.find()) {
+            try {
+                return Integer.parseInt(matcher.group());
+            }catch (NumberFormatException e){
+                if (str.startsWith("-")){
+                    return Integer.MIN_VALUE;
+                }else {
+                    return Integer.MAX_VALUE;
+                }
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+     * @param x
+     * @return
+     */
+    public boolean isPalindrome(int x) {
+        String str = String.valueOf(x);
+        for (int i = 0, j = str.length()-1; i <= j; i++,j--){
+            if (str.charAt(i) != str.charAt(j)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 给定一个字符串 (s) 和一个字符模式 (p)。实现支持 '.' 和 '*' 的正则表达式匹配。
+     * '.' 匹配任意单个字符。
+     * '*' 匹配零个或多个前面的元素。
+     * @param s
+     * @param p
+     * @return
+     */
+    public boolean isMatch(String s, String p) {
+        return true;
+    }
+
     public static void main(String[] args) {
         test t = new test();
-        String paypalishiring = t.convert("PAYPALISHIRING", 3);
-        System.out.println(paypalishiring);
+        boolean bool = t.isPalindrome(-121);
+        System.out.println(bool);
     }
     @Test
     public void aa(){
