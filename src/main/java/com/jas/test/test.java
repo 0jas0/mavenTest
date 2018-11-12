@@ -119,10 +119,45 @@ public class test {
         return maxLength.equals("")? s.charAt(0) + "" : maxLength;
     }
 
+    /**
+     * 将字符串 "PAYPALISHIRING" 以N字形排列成给定的行数，并输出最后的字符结果
+     * 例如：PAYPALISHIRING
+     * 返回：PAHNAPLSIIGYIR
+     *  P   A   H   N
+     *  A P L S I I G
+     *  Y   I   R
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public String convert(String s, int numRows) {
+        if (numRows == 1){
+            return s;
+        }
+        List<StringBuffer> rows = new ArrayList<>();
+        for (int i = 0; i < Math.min(numRows, s.length()); i++){
+            rows.add(new StringBuffer());
+        }
+        boolean needTurn = false;
+        int curRow = 0;
+        for (char c : s.toCharArray()){
+            rows.get(curRow).append(c);
+            if (curRow == 0 || curRow == rows.size()-1){
+                needTurn = !needTurn;
+            }
+            curRow += needTurn ? 1 : -1;
+        }
+        StringBuffer result = new StringBuffer();
+        for (StringBuffer stringBuffer : rows){
+            result.append(stringBuffer);
+        }
+        return result.toString();
+    }
+
     public static void main(String[] args) {
         test t = new test();
-        String str = t.longestPalindrome("");
-        System.out.println(str);
+        String paypalishiring = t.convert("PAYPALISHIRING", 3);
+        System.out.println(paypalishiring);
     }
     @Test
     public void aa(){
