@@ -1,5 +1,6 @@
 package com.jas.concurrent;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -29,7 +30,7 @@ public class ConcurrentQueue {
         }
     }
     public static void main(String[] args) {
-        /*ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue<>();
+        ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue<>();
         queue.add("aaa");
         queue.offer("bbb");
         queue.add("ccc");
@@ -38,7 +39,7 @@ public class ConcurrentQueue {
         System.out.println(queue.poll());
         System.out.println(queue.size());
         System.out.println(queue.peek());
-        System.out.println(queue.size());*/
+        System.out.println(queue.size());
 
         /*LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
         linkedBlockingQueue.add("a");

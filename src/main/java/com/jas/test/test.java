@@ -1,11 +1,19 @@
 package com.jas.test;
 
+import com.google.common.collect.Lists;
 import com.jas.bean.person;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -236,6 +244,19 @@ public class test {
      * @return
      */
     public boolean isMatch(String s, String p) {
+        if (".*".equals(p)){
+            return true;
+        }
+        char[] sChars = s.toCharArray();
+        char[] pChars = p.toCharArray();
+        for (int i = 0; i < sChars.length; i++){
+            int j = i;
+            while (sChars[i] != pChars[j] && pChars[j] != '.'){
+                if (pChars[j] == '*'){
+
+                }
+            }
+        }
         return true;
     }
 
@@ -353,4 +374,141 @@ public class test {
         });
         thread.start();
     }
+
+    @Test
+    public void test05() throws InterruptedException {
+        final ThreadLocal<String> threadLocal = new InheritableThreadLocal<>();
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        threadLocal.set("****Thread*******");
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    countDownLatch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("thread1:" + threadLocal.get());
+                threadLocal.set("aaaaaaaa");
+                System.out.println("thread1:" + threadLocal.get());
+            }
+        });
+        thread1.start();
+        threadLocal.set("***************");
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    countDownLatch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("thread2:" + threadLocal.get());
+                threadLocal.set("bbbbbbb");
+                System.out.println("thread2:" + threadLocal.get());
+            }
+        });
+        thread2.start();
+        System.out.println("main thread:" + threadLocal.get());
+        countDownLatch.countDown();
+
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+        atomicInteger.incrementAndGet();
+
+    }
+
+    @Test
+    public void test5(){
+        String aa = "201811".substring(0,4);
+        String bb = "201811".substring(4);
+        System.out.println(aa+"_____"+bb);
+    }
+
+    @Test
+    public void test6(){
+        Random random = new Random();
+        for (int i = 0; i < 10; i++){
+            int aa = random.nextInt(5);
+            System.out.println(aa);
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+
+    }
+    @Test
+    public void test7() throws InterruptedException {
+        final Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    lock.lock();
+                    System.out.println("start await");
+                    condition.await();
+                    System.out.println("release await");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }finally {
+                    lock.unlock();
+                }
+            }
+        });
+        thread1.start();
+        System.out.println("await timing . . . . . . ");
+        Thread.sleep(1000);
+
+
+        lock.lock();
+        condition.signal();
+        lock.unlock();
+
+    }
+
+    @Test
+    public void test8() throws InterruptedException {
+        ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("start park");
+                while (!Thread.currentThread().isInterrupted()){
+                    LockSupport.park();
+                }
+                System.out.println("end park");
+            }
+        });
+        thread.start();
+
+        Thread.sleep(1000);
+        System.out.println("main thread start unpark");
+        thread.interrupt();
+    }
+
+    @Test
+    public void test9(){
+        List<String> lists = new ArrayList<>();
+        lists.add("a");
+        lists.add("b");
+        lists.add("c");
+        lists.add("d");
+        lists.add("e");
+        lists.add("f");
+        lists.add("g");
+        List<List<String>> partition = Lists.partition(lists, 2);
+        ReentrantLock reentrantLock = new ReentrantLock();
+        ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+        System.out.println(1<<16);
+    }
+
+    @Test
+    public void test10() throws IOException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        FileInputStream masterInput = new FileInputStream(new File("/Users/jas/Downloads/19399990001_master.xlsx"));
+        List<LinkedHashMap<String, String>> masterList = FileUtil.importExcel(masterInput, "master.xlsx");
+
+        FileInputStream hotfixInput = new FileInputStream(new File("/Users/jas/Downloads/19399990001_hotfix.xlsx"));
+        List<LinkedHashMap<String, String>> hotfixList = FileUtil.importExcel(masterInput, "master.xlsx");
+
+    }
+
 }
