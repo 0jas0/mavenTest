@@ -26,6 +26,7 @@
     </settings>
 
     <typeAliases>
+        <package name="com.jas.mybatis.bean"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">

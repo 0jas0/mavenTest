@@ -1,5 +1,4 @@
 package com.jas.mybatis.bean;
-
 public class StudentPO {
     private Integer id;
     private Integer courseId;
