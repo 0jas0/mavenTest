@@ -4,14 +4,8 @@ import com.google.common.collect.Lists;
 import com.jas.bean.person;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.*;
 import java.util.regex.Matcher;
@@ -502,13 +496,59 @@ public class test {
     }
 
     @Test
-    public void test10() throws IOException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        FileInputStream masterInput = new FileInputStream(new File("/Users/jas/Downloads/19399990001_master.xlsx"));
-        List<LinkedHashMap<String, String>> masterList = FileUtil.importExcel(masterInput, "master.xlsx");
-
-        FileInputStream hotfixInput = new FileInputStream(new File("/Users/jas/Downloads/19399990001_hotfix.xlsx"));
-        List<LinkedHashMap<String, String>> hotfixList = FileUtil.importExcel(masterInput, "master.xlsx");
-
+    public void test10() throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        Object lock = new Object();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (lock) {
+                    int i = 0;
+                    while (true) {
+                        i++;
+                    }
+                }
+            }
+        });
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (lock) {
+                    int i = 0;
+                    while (true) {
+                        i++;
+                    }
+                }
+            }
+        });
+        Thread.sleep(100000);
+    }@Test
+    public void test11(){
+        String a = "ab";
+        String b = "a" + "b";
+        String c = "a";
+        String d = c + "b";
+        System.out.println(a==b);
+        System.out.println(a==d);
     }
+
+    @Test
+    public void test12(){
+        System.out.println(Integer.valueOf(11) == 11);
+        System.out.println(Integer.valueOf(11) == Integer.valueOf("11"));
+        System.out.println(Integer.valueOf(128) == Integer.valueOf("128"));
+    }
+
+    @Test
+    public void test13(){
+        String test = "13214fqwe";
+        Pattern pattern = Pattern.compile("^\\d+");
+        Matcher matcher = pattern.matcher(test);
+        if (matcher.find()){
+            String group = matcher.group();
+            System.out.println(group);
+        }
+    }
+
 
 }

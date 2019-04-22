@@ -32,7 +32,6 @@ public class Lambda {
         };
         sayService.sayMessage("hello world");
 
-        Runnable aNew = Lambda::new;
 
     }
 }

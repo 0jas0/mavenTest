@@ -1,6 +1,8 @@
 package com.jas.concurrent;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -41,21 +43,21 @@ public class ConcurrentQueue {
         System.out.println(queue.peek());
         System.out.println(queue.size());
 
-        /*LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
+        LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
         linkedBlockingQueue.add("a");
         linkedBlockingQueue.add("b");
         linkedBlockingQueue.add("c");
         linkedBlockingQueue.offer("d");
         linkedBlockingQueue.add("e");
-        System.out.println(linkedBlockingQueue.size());*/
+        System.out.println(linkedBlockingQueue.size());
 
-       /* ArrayBlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<String>(4);
+        ArrayBlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<String>(4);
         arrayBlockingQueue.offer("a");
         arrayBlockingQueue.offer("b");
         arrayBlockingQueue.offer("c");
         arrayBlockingQueue.offer("d");
         arrayBlockingQueue.offer("e");
-        System.out.println(arrayBlockingQueue.size());*/
+        System.out.println(arrayBlockingQueue.size());
 
         PriorityBlockingQueue<person> priorityBlockingQueue = new PriorityBlockingQueue<>();
         ConcurrentQueue concurrentQueue = new ConcurrentQueue();
