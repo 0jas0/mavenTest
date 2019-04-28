@@ -550,5 +550,16 @@ public class test {
         }
     }
 
+    @Test
+    public void test14(){
+        System.out.println(Integer.valueOf("256") == Integer.valueOf("256"));
+        System.out.println(Integer.valueOf("128") == Integer.valueOf("128"));
+        System.out.println(new Integer(256) == Integer.parseInt("256"));
+        System.out.println(Integer.parseInt("256") == Integer.valueOf("256"));
+        System.out.println(new Integer(256) == new Integer(256) );
+        System.out.println(Integer.valueOf("127") == Integer.valueOf("127") );
+        System.out.println(222 == new Integer(222));
+    }
+
 
 }
