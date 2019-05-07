@@ -7,32 +7,72 @@ package com.jas.algorithm;
  * @author 琚安生
  * @since 设计wiki | 需求wiki
  */
-public class BinarySearch {
+public class BinarySearch<Key extends Comparable<? super Key>, Val>{
+
+    private Key[] keys;
+    private Val[] vals;
+    private int N;
+
+    public BinarySearch(int maxNum) {
+        keys = (Key[])new Comparable[maxNum];
+        vals = (Val[])new Object();
+    }
+
+    public boolean isEmpty(){
+        return N == 0;
+    }
+
+    public int size(){
+        return N;
+    }
+
+    public Val get(Key key){
+        if (isEmpty()){
+            return null;
+        }
+        int index = rank(key);
+        if (index < N && keys[index].compareTo(key) == 0){
+            return vals[index];
+        }else {
+            return null;
+        }
+    }
+
+    public void put(Key key, Val val){
+        int index = rank(key);
+        if (index < N && keys[index].compareTo(key) == 0){
+            vals[index] = val;
+            return;
+        }
+
+        for (int j = N; j > index; j--){
+            keys[j] = keys[j-1];
+            vals[j] = vals[j-1];
+        }
+        keys[index] = key;
+        vals[index] = val;
+        N++;
+    }
+
     /**
      * 二分查找非递归方式
-     * @param a
      * @param key
      * @return
      */
-    public static int rank(int a[], int key){
+    public int rank(Key key){
         int lo = 0;
-        int hi = a.length - 1;
+        int hi = N - 1;
         while (lo <= hi) {
             int mid = lo + (hi - lo)/2;
-            if (key < a[mid]){
+            if (key.compareTo(keys[mid]) < 0){
                 hi = mid - 1;
-            }else if (key > a[mid]){
+            }else if (key.compareTo(keys[mid]) > 0){
                 lo = mid + 1;
             }else {
                 return mid;
             }
         }
-        return -1;
+        return lo;
     }
 
-    public static void main(String[] args) {
-        int[] a = {1, 3, 5 , 8 ,10};
-        int rank = rank(a, 8);
-        System.out.println(rank);
-    }
 }
