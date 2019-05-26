@@ -561,5 +561,16 @@ public class test {
         System.out.println(222 == new Integer(222));
     }
 
+    @Test
+    public void test15(){
+        Map<String, Integer> map = new LinkedHashMap<>();
+        map.put("a", 2);
+        map.put("b", 1);
+        map.put("c", 3);
+        map.put("d", 5);
+        List<Map.Entry<String, Integer>> arrayList = new ArrayList<>(map.entrySet());
+        Collections.sort(arrayList , (args0, args1) -> args0.getValue() - args1.getValue());
+    }
+
 
 }
