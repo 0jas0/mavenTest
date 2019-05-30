@@ -2,6 +2,8 @@ package com.jas.algorithm;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * 使用领接表实现图
@@ -52,6 +54,61 @@ public class Graph {
 
     public int getEdge(){
         return edge;
+    }
+
+    /**
+     *  广度搜索图
+     */
+    class breadthFirstPaths{
+        private boolean[] marked;
+        private int[] edgeTo;
+        private final int s;
+
+        public breadthFirstPaths(Graph graph, int s) {
+            marked = new boolean[graph.getVertex()];
+            edgeTo = new int[graph.getVertex()];
+            this.s = s;
+            bfs(graph, s);
+        }
+
+        public void bfs(Graph graph, int v){
+            Queue<Integer> queue = new ConcurrentLinkedQueue<>();
+            queue.add(v);
+            marked[v] = true;
+            while (!queue.isEmpty()){
+                Integer poll = queue.poll();
+                // 获取弹出的节点
+                for (int w : adj(poll)){
+                    if (!marked[w]){
+                        marked[w] = true;
+                        edgeTo[w] = poll;
+                        queue.add(w);
+                    }
+                }
+            }
+        }
+
+        public boolean hasPathTo(int v){
+            return marked[v];
+        }
+
+        /**
+         * 到顶点 v 所有经多的路径
+         * @param v
+         * @return
+         */
+        public List<Integer> pathTo(int v){
+            if (!hasPathTo(v)){
+                return null;
+            }
+            LinkedList<Integer> list = new LinkedList<>();
+            for (int i = edgeTo[v]; i != s; i = edgeTo[v]){
+                list.addFirst(i);
+            }
+            list.add(s);
+            return list;
+        }
+
     }
 
     /**
@@ -135,4 +192,120 @@ public class Graph {
             return list;
         }
     }
+
+    /**
+     * 找出图中所有的连通分量
+     */
+    class CC{
+        private int[] ids;
+        private boolean[] marked;
+        private int count;
+
+        public CC(Graph graph) {
+            ids = new int[graph.getVertex()];
+            marked = new boolean[graph.getVertex()];
+            for (int i = 0; i < graph.getVertex(); i++){
+                if (!marked[i]){
+                    dfs(graph, i);
+                    count++;
+                }
+            }
+        }
+
+        public void dfs(Graph graph, int s){
+            marked[s] = true;
+            ids[s] = count;
+            for (int v : adj(s)){
+                if (!marked[v]){
+                    dfs(graph, v);
+                }
+            }
+        }
+
+        public boolean isConnection(int v, int w){
+            return ids[v] == ids[w];
+        }
+
+        public int getId(int v){
+            return ids[v];
+        }
+
+        public int getCount(){
+            return count;
+        }
+
+    }
+
+    /**
+     * 图中是否有环
+     */
+    class Cycle{
+        private boolean[] marked;
+        private boolean hasCycle;
+        public Cycle(Graph graph){
+            marked = new boolean[graph.getVertex()];
+            for (int i = 0; i < graph.getVertex(); i++){
+                if (!marked[i]){
+                    dfs(graph, i, i);
+                }
+            }
+        }
+
+        /**
+         * 比较难理解，画图就能看明白
+         * @param graph
+         * @param v
+         * @param w
+         */
+        public void dfs(Graph graph, int v, int w){
+            for (int i : adj(v)){
+                if (!marked[i]){
+                    dfs(graph, i, v);
+                }else if (w != i){
+                    hasCycle = true;
+                }
+            }
+        }
+
+        public boolean isHasCycle(){
+            return hasCycle;
+        }
+    }
+
+    /**
+     * 判断图是否是二分图
+     */
+    class TwoColor{
+        private boolean[] marked;
+        private boolean[] color;
+        private boolean twoColorGraph;
+
+        public TwoColor(Graph graph) {
+            marked = new boolean[graph.getVertex()];
+            color = new boolean[graph.getVertex()];
+            twoColorGraph = true;
+            for (int i = 0; i < graph.getVertex(); i++){
+                if (!marked[i]){
+                    dfs(graph, i);
+                }
+            }
+        }
+
+        public void dfs(Graph graph, int v){
+            marked[v] = true;
+            for (int w : adj(v)){
+                if (!marked[w]){
+                    color[w] = !color[v];
+                    dfs(graph, w);
+                }else if (color[w] == color[v]){
+                    twoColorGraph = false;
+                }
+            }
+        }
+
+        public boolean isTwoColorGraph(){
+            return twoColorGraph;
+        }
+    }
+
 }
