@@ -572,5 +572,14 @@ public class test {
         Collections.sort(arrayList , (args0, args1) -> args0.getValue() - args1.getValue());
     }
 
+    @Test
+    public void test16(){
+        String[] a = new String[]{"a", "b"};
+        List<String> list = new ArrayList<>(Arrays.asList(a));
+        System.out.println(list);
+        list.add("c");
+        System.out.println(list);
+    }
+
 
 }
