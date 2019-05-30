@@ -5,6 +5,7 @@ import java.io.*;
 public class serialVersionUIDTest {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Person person = new Person("路飞",5);
+        person.grade = "男";
         //ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("./person")));
         oos.writeObject(person);
@@ -26,7 +27,7 @@ public class serialVersionUIDTest {
 class Person implements Serializable{
     private static final long serialVersionUID = 123456789L;
 
-    public static String grade = "男";
+    public static String grade;
 
     public Person(String name, int age) {
         this.name = name;
