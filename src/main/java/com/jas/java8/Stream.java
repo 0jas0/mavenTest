@@ -2,9 +2,7 @@ package com.jas.java8;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Arrays;
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +50,17 @@ public class Stream {
         List<String> collectorsList = Arrays.asList("aa", "ab", "ac", "ad", "ae", "af");
         String collect1 = collectorsList.stream().filter(str -> !StringUtils.isEmpty(str)).collect(Collectors.joining(","));
         System.out.println(collect1);
+        // Collectors 的 groupingBy
+        Person person1 = new Person("安徽","张三",23);
+        Person person2 = new Person("安徽","李四",25);
+        Person person3 = new Person("浙江","王武",23);
+        Person person4 = new Person("浙江","李蛋",24);
+        List<Person> personList = new ArrayList<>();
+        personList.add(person1);
+        personList.add(person2);
+        personList.add(person3);
+        personList.add(person4);
+        Map<String, List<Person>> listMap = personList.stream().collect(Collectors.groupingBy(person -> person.getAreaId()));
 
         // summaryStatistics 主要用于int、double、long等基本类型,统计结果的收集器也非常有用
         List<Double> numbers = Arrays.asList(1.2, 11.0, 12.1, 1.3, 4.6);
@@ -60,6 +69,7 @@ public class Stream {
         System.out.println("最小值：" + intSummaryStatistics.getMin());
         System.out.println("平均值：" + intSummaryStatistics.getAverage());
         System.out.println("求和：" + intSummaryStatistics.getSum());
+
     }
     private static void print(String str){
         System.out.print(str + " ");
@@ -67,5 +77,41 @@ public class Stream {
 
     private static String delMap(Integer a){
         return "steam:" + a +" ";
+    }
+
+    static class Person{
+        private String areaId;
+        private String name;
+        private int age;
+
+        public Person(String areaId, String name, int age) {
+            this.areaId = areaId;
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getAreaId() {
+            return areaId;
+        }
+
+        public void setAreaId(String areaId) {
+            this.areaId = areaId;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
     }
 }

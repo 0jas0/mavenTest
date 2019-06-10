@@ -102,7 +102,7 @@ public class Graph {
                 return null;
             }
             LinkedList<Integer> list = new LinkedList<>();
-            for (int i = edgeTo[v]; i != s; i = edgeTo[v]){
+            for (int i = edgeTo[v]; i != s; i = edgeTo[i]){
                 list.addFirst(i);
             }
             list.add(s);
@@ -168,6 +168,7 @@ public class Graph {
             marked[s] = true;
             for (int w : graph.adj(s)){
                 edgeTo[w] = s;
+                dfs(graph, w);
             }
         }
 
@@ -185,7 +186,7 @@ public class Graph {
                 return null;
             }
             LinkedList<Integer> list = new LinkedList<>();
-            for (int i = edgeTo[v]; i != s; i = edgeTo[v]){
+            for (int i = edgeTo[v]; i != s; i = edgeTo[i]){
                 list.addFirst(i);
             }
             list.add(s);
