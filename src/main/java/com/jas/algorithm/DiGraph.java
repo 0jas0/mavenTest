@@ -210,4 +210,43 @@ public class DiGraph {
             return order != null;
         }
     }
+
+    /**
+     * 计算强连通分量
+     */
+    class kosarajuSCC{
+        private int[] ids;
+        private boolean[] marked;
+        private int count;
+
+        public kosarajuSCC(DiGraph diGraph) {
+            ids = new int[diGraph.getVertex()];
+            marked = new boolean[diGraph.getVertex()];
+            DepthFirstOrder depthFirstOrder = new DepthFirstOrder(diGraph);
+            for (int v : depthFirstOrder.getRevertPost()){
+                if (!marked[v]){
+                    dfs(diGraph, v);
+                    count++;
+                }
+            }
+        }
+
+        private void dfs(DiGraph diGraph, int v) {
+            ids[v] = count;
+            marked[v] = true;
+            for (int w : adj[v]){
+                if (!marked[w]){
+                    dfs(diGraph, w);
+                }
+            }
+        }
+
+        public boolean isStrongly(int v, int w){
+            return ids[v] == ids[w];
+        }
+
+        public int getCount() {
+            return count;
+        }
+    }
 }
