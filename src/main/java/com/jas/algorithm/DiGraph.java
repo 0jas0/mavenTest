@@ -164,6 +164,7 @@ public class DiGraph {
         }
 
         private void dfs(DiGraph diGraph, int v) {
+            marked[v] = true;
             // 添加先序
             pre.add(v);
             for (int w : adj[v]){
@@ -222,7 +223,7 @@ public class DiGraph {
         public kosarajuSCC(DiGraph diGraph) {
             ids = new int[diGraph.getVertex()];
             marked = new boolean[diGraph.getVertex()];
-            DepthFirstOrder depthFirstOrder = new DepthFirstOrder(diGraph);
+            DepthFirstOrder depthFirstOrder = new DepthFirstOrder(diGraph.reverse());
             for (int v : depthFirstOrder.getRevertPost()){
                 if (!marked[v]){
                     dfs(diGraph, v);

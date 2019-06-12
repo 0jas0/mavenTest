@@ -522,7 +522,8 @@ public class test {
             }
         });
         Thread.sleep(100000);
-    }@Test
+    }
+    @Test
     public void test11(){
         String a = "ab";
         String b = "a" + "b";
@@ -581,5 +582,14 @@ public class test {
         System.out.println(list);
     }
 
+    /**
+     * char 类型的数字字符变成对应的数字
+     */
+    @Test
+    public void test17(){
+        char a = '9';
+        int b = a - '0';
+        System.out.println(b);
+    }
 
 }
