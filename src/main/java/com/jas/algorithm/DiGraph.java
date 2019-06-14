@@ -250,4 +250,22 @@ public class DiGraph {
             return count;
         }
     }
+
+    /**
+     * 查看有向图中两个节点是否可达
+     */
+    class TransitiveClosure{
+        private DirectedDFS[] diGraphs;
+
+        public TransitiveClosure(DiGraph diGraph) {
+            diGraphs = new DirectedDFS[diGraph.getVertex()];
+            for (int v = 0; v < diGraph.getVertex(); v++){
+                diGraphs[v] = new DirectedDFS(diGraph, v);
+            }
+        }
+
+        public boolean reachable(int v, int w){
+            return diGraphs[v].isMarked(w);
+        }
+    }
 }
