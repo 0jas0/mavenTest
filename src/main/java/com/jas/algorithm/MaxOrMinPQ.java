@@ -6,13 +6,16 @@ package com.jas.algorithm;
  * @author 琚安生
  * @since 设计wiki | 需求wiki
  */
-public class MaxPQ<T extends Comparable<? super T>>{
+public class MaxOrMinPQ<T extends Comparable<? super T>>{
+    private boolean isMaxPQ;
     private T[] pq;
     private int length = 0;
 
-    public MaxPQ(int maxNum) {
-        pq = (T[]) new Comparable[maxNum];
+    public MaxOrMinPQ(int maxNum, boolean isMaxPQ) {
+        pq = (T[]) new Comparable[maxNum+1];
+        isMaxPQ = isMaxPQ;
     }
+
 
     public boolean isEmpty(){
         return length == 0;
@@ -28,7 +31,7 @@ public class MaxPQ<T extends Comparable<? super T>>{
 
     }
 
-    public T delMax(){
+    public T del(){
         T max = pq[1]; // 根结点获取最大值
         exch(1, length);// 交换最大值和最后一个节点
         pq[length--] = null;
@@ -42,7 +45,13 @@ public class MaxPQ<T extends Comparable<? super T>>{
      */
     public void swim(int k){
         while (k > 1){
-            if (pq[k].compareTo(pq[k/2]) > 0){
+            boolean flag = true;
+            if (isMaxPQ){
+                flag = pq[k].compareTo(pq[k/2]) > 0;
+            }else {
+                flag = pq[k].compareTo(pq[k/2]) < 0;
+            }
+            if (flag){
                 exch(k, k/2);
             }
             k = k/2;
@@ -57,10 +66,21 @@ public class MaxPQ<T extends Comparable<? super T>>{
     public void sink(int k){
         while (2*k < length){
             int j = 2*k;
-            if (pq[2*k].compareTo(pq[2*k+1]) < 0){
+            boolean flag = true;
+            if (isMaxPQ){
+                flag = pq[2*k].compareTo(pq[2*k+1]) < 0;
+            }else {
+                flag = pq[2*k].compareTo(pq[2*k+1]) > 0;
+            }
+            if (flag){
                 j++;
             }
-            if (pq[k].compareTo(pq[j]) < 0){
+            if (isMaxPQ){
+                flag = pq[k].compareTo(pq[j]) < 0;
+            }else {
+                flag = pq[k].compareTo(pq[j]) > 0;
+            }
+            if (flag){
                 exch(k, j);
             }
             k = j;
