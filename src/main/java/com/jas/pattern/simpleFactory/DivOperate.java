@@ -14,7 +14,7 @@ public class DivOperate extends Operate{
     public double calculate() {
         BigDecimal num1 = new BigDecimal(getNum1());
         BigDecimal num2 = new BigDecimal(getNum2());
-        BigDecimal res = num1.divide(num1);
+        BigDecimal res = num1.divide(num2);
         return res.doubleValue();
     }
 }
