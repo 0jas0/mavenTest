@@ -162,7 +162,8 @@ public interface IElasticSearchDAO {
       * @Param o:
       * @Param index:
       * @Param type:
+      * @Param id:
       * @return: io.searchbox.client.JestResult
     */
-    public <T> JestResult createIndex(T o , String index , String type);
+    public <T> JestResult createIndex(T o , String index , String type, String id);
 }

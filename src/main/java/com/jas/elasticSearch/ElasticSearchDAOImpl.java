@@ -149,11 +149,12 @@ public class ElasticSearchDAOImpl implements IElasticSearchDAO{
     }
 
     @Override
-    public <T> JestResult createIndex(T o, String indexName, String type) {
-        Index index = new Index.Builder(o).index(indexName).type(type).build();
+    public <T> JestResult createIndex(T o, String indexName, String type, String id) {
+        Index index = new Index.Builder(o).index(indexName).type(type).id(id).build();
         StringBuilder stringBuilder = new StringBuilder("创建索引失败");
         stringBuilder.append(",index:" + indexName);
         stringBuilder.append(",type:" + type);
+        stringBuilder.append(",id:" + id);
         stringBuilder.append(",object:" + JSON.toJSONString(o));
         return execute(index, stringBuilder.toString());
     }
