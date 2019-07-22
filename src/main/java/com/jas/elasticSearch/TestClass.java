@@ -64,7 +64,28 @@ public class TestClass {
 
     @Test
     public void createIndexTest(){
-        User user = new User("1", "jas", "crm");
+        User user = new User("3", "zcc", "crm");
         elasticSearchDAO.createIndex(user, "index_test", "type_test", user.getUserId());
     }
+
+    @Test
+    public void indicsExistsTest(){
+        JestResult result = elasticSearchDAO.indicsExists("index_test");
+        System.out.println(result);
+    }
+
+    @Test
+    public void getDocumentTest(){
+        JestResult document = elasticSearchDAO.getDocument("index_test", "type_test", "3");
+        User user = document.getSourceAsObject(User.class);
+        System.out.println(user);
+    }
+
+    @Test
+    public void updateDocumentTest(){
+        User user = new User("2", "bhz", "crm");
+        JestResult jestResult = elasticSearchDAO.updateDocument(user, "index_test", "type_test", "2");
+        System.out.println(jestResult);
+    }
+
 }

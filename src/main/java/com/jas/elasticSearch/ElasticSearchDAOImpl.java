@@ -91,7 +91,7 @@ public class ElasticSearchDAOImpl implements IElasticSearchDAO{
     public <T> JestResult updateDocument(T o, String index, String type, String id) {
         Map<String, T> map = new HashMap<>();
         map.put("doc", o);
-        String string = JSON.toJSONString(o);
+        String string = JSON.toJSONString(map);
         Update update = new Update.Builder(string).index(index).type(type).id(id).build();
         return execute(update,"更新文档信息失败");
     }
