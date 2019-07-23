@@ -107,8 +107,9 @@ public class ElasticSearchDAOImpl implements IElasticSearchDAO{
     }
 
     @Override
-    public JestResult deleteDocumentByQuery(String index, String type, String params) {
-        DeleteByQuery deleteByQuery = new DeleteByQuery.Builder(params).addIndex(index).addType(type).build();
+    public JestResult deleteDocumentByQuery(String index, String type, Map<String, String> params) {
+        String jsonString = JSON.toJSONString(params);
+        DeleteByQuery deleteByQuery = new DeleteByQuery.Builder(jsonString).addIndex(index).addType(type).build();
         StringBuilder stringBuilder = new StringBuilder("通过添加删除文档失败");
         stringBuilder.append(",index:" + index);
         stringBuilder.append(",type:" + type);

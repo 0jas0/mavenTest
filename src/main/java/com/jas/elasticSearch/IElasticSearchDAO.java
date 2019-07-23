@@ -2,6 +2,8 @@ package com.jas.elasticSearch;
 
 import io.searchbox.client.JestResult;
 
+import java.util.Map;
+
 /**
  * <pre>
  * Desc  : elasticSearch: jest client 常用操作api
@@ -127,7 +129,7 @@ public interface IElasticSearchDAO {
       * @Param params:
       * @return: io.searchbox.client.JestResult
     */
-    public JestResult deleteDocumentByQuery(String index, String type, String params);
+    public JestResult deleteDocumentByQuery(String index, String type, Map<String, String> params);
 
 
     /**

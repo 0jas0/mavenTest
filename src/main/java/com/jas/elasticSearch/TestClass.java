@@ -4,6 +4,9 @@ import io.searchbox.client.JestResult;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <pre>
  * Desc  :
@@ -86,6 +89,26 @@ public class TestClass {
         User user = new User("2", "bhz", "crm");
         JestResult jestResult = elasticSearchDAO.updateDocument(user, "index_test", "type_test", "2");
         System.out.println(jestResult);
+    }
+
+    @Test
+    public void deleteDocumentTest(){
+        JestResult jestResult = elasticSearchDAO.deleteDocument("index_test", "type_test", "3");
+    }
+
+    @Test
+    public void deleteDocumentByQueryTest(){
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", "zcc");
+        JestResult jestResult = elasticSearchDAO.deleteDocumentByQuery("index_test", "type_test", map);
+        System.out.println(jestResult);
+    }
+
+    @Test
+    public void createSearchTest(){
+        JestResult search = elasticSearchDAO.createSearch("zcc", "index_test", "type_test", "userName");
+        User source = search.getSourceAsObject(User.class);
+        System.out.println(source);
     }
 
 }
