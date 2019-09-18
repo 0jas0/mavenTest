@@ -592,4 +592,12 @@ public class test {
         System.out.println(b);
     }
 
+    @Test
+    public void test18(){
+        String methodName = FileUtil.getMethodName();
+        System.out.println(methodName);
+        String className = FileUtil.getClassName();
+        System.out.println(className);
+    }
+
 }

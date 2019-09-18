@@ -225,4 +225,12 @@ public class FileUtil {
         InputStream is = new ByteArrayInputStream(b);
         return is;
     }
+
+
+    public static String getMethodName(){
+        return Thread.currentThread().getStackTrace()[2].getMethodName();
+    }
+    public static String getClassName(){
+        return Thread.currentThread().getStackTrace()[2].getClassName();
+    }
 }

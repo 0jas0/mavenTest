@@ -1,6 +1,7 @@
 package com.jas.java8;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -70,6 +71,24 @@ public class Stream {
         System.out.println("平均值：" + intSummaryStatistics.getAverage());
         System.out.println("求和：" + intSummaryStatistics.getSum());
 
+
+        List<String> stringList = new ArrayList<>();
+        boolean res = stringList.stream().filter(str -> str.equals("bb")).limit(1).anyMatch(str -> "aa".equals(str));
+        System.out.println(res);
+
+    }
+
+    @Test
+    public void test1(){
+        List<Person> peoples = new ArrayList<>();
+        peoples.add(new Person("a","aa",1));
+        peoples.add(new Person("a","bb",2));
+        peoples.add(new Person("b","c",12));
+        Map<String, List<Person>> collect = peoples.stream().collect(Collectors.toMap(
+                people -> people.getAreaId(),
+                people -> peoples,
+                (k1, k2) -> k2
+        ));
     }
     private static void print(String str){
         System.out.print(str + " ");
